@@ -5,6 +5,7 @@ import { FormVisibilityContext } from "@/components/FormVisibilityContext";
 import { PickedDateContext } from "@/components/PickedDateAndTimeContext";
 import { Point, SlotsPopup } from "@/components/SlotsPopup";
 import { SlotData } from "@/entities/api-types";
+import { useClickOutside } from "@/hooks/useClickOutside";
 import { fetchAvailableSpotsForDate } from "@/services/api-calls";
 import { RefObject, useContext, useRef, useState } from "react";
 import Calendar from "react-calendar";
@@ -21,6 +22,8 @@ export const BookingCalendar = () => {
   } = useContext(PickedDateContext);
   const [slotsVisibility, setSlotsVisibility] = useState(false);
   const [slotsPosition, setSlotPosition] = useState<Point>({} as Point);
+
+  useClickOutside(ref, () => setSlotsVisibility(false));
 
   const onDateClick = async (
     value: Date,
@@ -39,7 +42,7 @@ export const BookingCalendar = () => {
     if (ref.current) {
       const containerRect = ref.current.getBoundingClientRect();
       const relativeX = event.clientX - containerRect.left;
-      const relativeY = event.clientY - containerRect.top;
+      const relativeY = event.clientY + 20 - containerRect.top;
       setSlotPosition({ x: relativeX, y: relativeY });
     }
   };
@@ -51,20 +54,21 @@ export const BookingCalendar = () => {
   };
 
   return (
-    <div className="flex flex-col items-center max-w-xl relative">
-      <Calendar
-        showFixedNumberOfWeeks={true}
-        onClickDay={onDateClick}
-        locale="en"
-        inputRef={ref}
-      />
-      <SlotsPopup
-        position={slotsPosition}
-        pickedDate={pickedDate}
-        slotsVisibility={slotsVisibility}
-        slotsForDate={slotsForDate}
-        onHandleSlotClick={onSlotClick}
-      />
+    <div className="flex flex-col items-center max-w-2xl relative">
+      <div ref={ref}>
+        <Calendar
+          showFixedNumberOfWeeks={true}
+          onClickDay={onDateClick}
+          locale="en"
+        />
+        <SlotsPopup
+          position={slotsPosition}
+          pickedDate={pickedDate}
+          slotsVisibility={slotsVisibility}
+          slotsForDate={slotsForDate}
+          onHandleSlotClick={onSlotClick}
+        />
+      </div>
     </div>
   );
 };

@@ -1,5 +1,9 @@
 .react-calendar__navigation {
-    @apply flex gap-4 bg-slate-800 w-full py-2 px-3 rounded-t-md;
+    @apply flex gap-4 bg-slate-800 py-2 px-3 rounded-t-md;
+}
+
+.react-calendar__navigation__label {
+    @apply text-base sm:text-xl;
 }
 
 .react-calendar__viewContainer {
@@ -11,14 +15,17 @@
 }
 
 .react-calendar__month-view__days {
-    @apply py-2;
+    @apply py-4;
 }
 
 .react-calendar__month-view__days > button {
-    @apply p-2;
+    @apply px-2 py-4 hover:bg-slate-900 rounded-md transition-colors;
 }
 
 .react-calendar__month-view__days > button.react-calendar__tile--now {
+    @apply bg-slate-800 rounded-md;
+}
+.react-calendar__month-view__days > button.react-calendar__tile--active {
     @apply bg-orange-600 rounded-md;
 }
 

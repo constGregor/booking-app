@@ -22,6 +22,7 @@ export const FormVisibilityProvider: FC<FormVisibilityProviderProps> = ({
   const [formVisibility, setFormVisibility] = useState(false);
 
   const toggleForm = () => {
+    console.log("toggle");
     setFormVisibility((prevState) => !prevState);
   };
 

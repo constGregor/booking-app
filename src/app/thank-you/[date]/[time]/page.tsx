@@ -1,5 +1,6 @@
 "use server";
 import { HighlightedText } from "@/components/HighlightedText";
+import { useDateFormat } from "@/hooks/useFormatDate";
 
 export default async function ThankYou({
   params,
@@ -7,6 +8,7 @@ export default async function ThankYou({
   params: { date: string; time: string };
 }): Promise<React.JSX.Element> {
   const { date, time } = params;
+  const formattedDate = useDateFormat(date);
 
   return (
     <>
@@ -14,7 +16,7 @@ export default async function ThankYou({
         Thank <HighlightedText text="you" />!
       </h1>
       <p>
-        your reservation for <HighlightedText text={date} /> at{" "}
+        your reservation for <HighlightedText text={formattedDate} /> at{" "}
         <HighlightedText text={time} /> was succesful.
       </p>
       <a

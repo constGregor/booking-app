@@ -5,6 +5,8 @@ import { HighlightedText } from "@/components/HighlightedText";
 import { InputWithLabel } from "@/components/InputWithLabel";
 import { PickedDateContext } from "@/components/PickedDateAndTimeContext";
 import { UserData } from "@/entities/api-types";
+import { useClickOutside } from "@/hooks/useClickOutside";
+import { useDateFormat } from "@/hooks/useFormatDate";
 import {
   createOrGetExistingUser,
   createReservation,
@@ -14,15 +16,19 @@ import { useRouter } from "next/navigation";
 import {
   FC,
   FormEvent,
+  RefObject,
   useCallback,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from "react";
 
 const FormPopup = () => {
   const router = useRouter();
+  const ref: RefObject<HTMLDivElement> = useRef(null);
   const { pickedDate, pickedSlot } = useContext(PickedDateContext);
+  const formattedDate = useDateFormat(pickedDate);
   const { formVisibility, toggleForm } = useContext(FormVisibilityContext);
   const [userData, setUserData] = useState<UserData>({
     name: "",
@@ -30,6 +36,8 @@ const FormPopup = () => {
     phone: "",
   });
   const [userId, setUserId] = useState<number | null>(0);
+
+  useClickOutside(ref, toggleForm);
 
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,20 +83,26 @@ const FormPopup = () => {
   if (!formVisibility) return;
   return (
     <div className="absolute inset-0 w-full h-full flex justify-center items-center bg-gray-950/50">
-      <div className="flex flex-col gap-10 bg-slate-600 max-w-md w-full p-10 rounded-md">
-        <div className="flex gap-4 items-start relative text-left sm:text-center">
-          <h2 className="pr-4 sm:px-6">
-            Please fill out the form to make a reservation for{" "}
-            <HighlightedText text={pickedDate} /> at{" "}
-            <HighlightedText text={pickedSlot.slot_time} />
-          </h2>
+      <div
+        ref={ref}
+        className="flex flex-col gap-10 bg-slate-600 max-w-md w-full p-10 rounded-md"
+      >
+        <div className="flex flex-col items-end gap-4 sm:items-center relative text-left sm:text-center">
           <button
             type="button"
-            className="cursor-pointer text-3xl text-slate-800 font-bold absolute top-0 right-0"
+            className="cursor-pointer text-3xl text-slate-800 font-bold relative top-0 right-0 sm:absolute shadow-md hover:text-slate-900 transition-colors"
             onClick={toggleForm}
           >
             X
           </button>
+          <h2 className="pr-4 sm:px-6 text-lg font-semibold">
+            Make a reservation for:
+          </h2>
+          <div className="bg-white text-lg rounded-md py-2 px-6 shadow-md">
+            <HighlightedText text={formattedDate} />
+            <br />
+            <HighlightedText text={pickedSlot.slot_time} />
+          </div>
         </div>
         <form onSubmit={handleSubmit} className="flex flex-col gap-10">
           <InputWithLabel
