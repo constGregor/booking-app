@@ -1,0 +1,27 @@
+.react-calendar__navigation {
+    @apply flex gap-4 bg-slate-800 w-full py-2 px-3 rounded-t-md;
+}
+
+.react-calendar__viewContainer {
+    @apply bg-slate-700 rounded-b-md;
+}
+
+.react-calendar__month-view__weekdays {
+    @apply bg-slate-900 py-2 px-1 md:px-3 md:gap-2;
+}
+
+.react-calendar__month-view__days {
+    @apply py-2;
+}
+
+.react-calendar__month-view__days > button {
+    @apply p-2;
+}
+
+.react-calendar__month-view__days > button.react-calendar__tile--now {
+    @apply bg-orange-600 rounded-md;
+}
+
+.react-calendar__month-view__days > button:disabled {
+    @apply text-slate-500;
+}
