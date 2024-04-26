@@ -20,6 +20,19 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
+Database Creation:
+
+    Ensure PostgreSQL is installed and running.
+    Create a new database named "reservation-app" using your PostgreSQL client or command line.
+
+Install Dependencies:
+
+    Run npm install in the project directory to install all required dependencies.
+
+Database Migration:
+
+    Run npm run migrate-to-latest to apply database migrations
+
 ## Funcional requirments of a project:
 
 Page with date/time selection
