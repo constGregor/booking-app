@@ -23,9 +23,15 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 ## Funcional requirments of a project:
 
 Page with date/time selection
+
 Basic information input: name, email, phone
+
 Thank you page
+
 The application should allow only one reservation for a specific time/date.
+
 The frontend should not display already booked time slots, or indicate them clearly as booked.
+
 Upon creating the first request, a record about the user with the main identification element being email should be created on the backend.
+
 All further requests with the same email address should be assigned to the same user.
